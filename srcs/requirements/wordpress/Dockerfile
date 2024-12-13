@@ -18,25 +18,16 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y wget php7.3 php7.3-fpm php-mysql mariadb-client && \
     mkdir -p /run/php
 
-# PHP
-# RUN apt-get install -y php7.3\
-# php-fpm\
-# php-mysql\
-# mariadb-client
-
-# Wordpress v 6.0
-# WORKDIR /tmp
-# RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /tmp
-
-
-RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www 
+# RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www 
 # Décompresser et supprimer .tar  
-WORKDIR /var/www 
-RUN tar -xzf /var/www/wordpress-6.0-fr_FR.tar.gz && rm /var/www/wordpress-6.0-fr_FR.tar.gz
+# WORKDIR /var/www 
+# RUN tar -xzf /var/www/wordpress-6.0-fr_FR.tar.gz && rm /var/www/wordpress-6.0-fr_FR.tar.gz
 
 # deplace le fichier que l'on doit configurer
-RUN cp /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php
-COPY conf/wp-config.php /var/www/wordpress/wp-config.php
+# COPY conf/wp-config.php /var/www/wordpress/wp-config.php
+COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY conf/init.sh /var/www/wordpress/init.sh
+
 
 # j'arrive pas a deplacer le dossier qui a deja dans www?????
 # RUN cp -a /tmp/wordpress/. /var/www/wordpress
@@ -50,7 +41,8 @@ EXPOSE 9000
 
 # COPY ./conf/script.sh /
 #≻────────────── ⋆✩⋆ Lancement ⋆✩⋆──────────────≺
-CMD ["php-fpm7.3", "-F"]
+WORKDIR /var/www/wordpress
+CMD ["bash", "/var/www/wordpress/init.sh"]
 
 
 
