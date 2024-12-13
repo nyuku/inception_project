@@ -15,8 +15,37 @@ services:
 
       volumes:
         - ./requirements/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+        # - ./requirements/wordpress/html:/var/www/wordpress
       ports:
       - "443:443"
       # restart: always
       # network:
       # depends_on:
+
+# utilise l'image officiel
+  # mariadb:
+  #   image: mariadb
+  #   restart: always
+  #   environment:
+  #     MARIADB_ROOT_PASSWORD: example
+  #   # ports:
+  #   #   - "3306:3306"
+    
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+
+  wordpress:
+    build:
+        context: ./requirements/wordpress
+    entrypoint:
+
+    volumes:
+      - ./data:/var/www/wordpress
+      # prepare le dossier wordpress dans www....avec tout dedans et nous montre ce qui ya dedans avec la partie de gauche
+
+
+
+    

@@ -8,6 +8,7 @@
 # 		Consignes:
 #		✩ TLSv1.2 ou TLSv1.3 uniquement
 #		✩ Port 443 = HTTPS
+#		✩ "docker compose exec nginx bash" lance le container
 # ╚──────────────────────────────────────────────¤◎¤──────────────────────────────────────────────╝
 
 	# ≻────────────── ⋆✩⋆ ENV SYSTEME ⋆✩⋆──────────────≺

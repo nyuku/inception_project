@@ -9,7 +9,8 @@
 # ≻────────────── ⋆✩⋆ ENV SYSTEME ⋆✩⋆──────────────≺
 
 # debian: buster est trop lourd et complet,
-FROM debian:buster
+# FROM debian:buster
+FROM mysql:latest
 # ≻────────────── ⋆✩⋆ INSTALLATION ⋆✩⋆──────────────≺
 
 # 10.3 version de Maria
