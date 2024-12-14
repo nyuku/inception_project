@@ -23,27 +23,28 @@ CLEAN_TXT     	=   echo "$(CYAN)Cleaning$(ENDCOLOR)"
 all : build up
 
 up :
-	@docker-compose -f ./srcs/docker-compose.yml up -d
+	@docker compose -f ./srcs/docker-compose.yml up -d
 	@$(START_TXT)
 
 down :
-	@docker-compose -f ./srcs/docker-compose.yml down
+	@docker compose -f ./srcs/docker-compose.yml down
 	@$(DOWN_TXT)
 
 stop :
-	@docker-compose -f ./srcs/docker-compose.yml stop
+	@docker compose -f ./srcs/docker-compose.yml stop
 	@$(STOP_TXT)
 
 build:
-	@docker-compose -f ./srcs/docker-compose.yml build
+	@docker compose -f ./srcs/docker-compose.yml build
 	@$(BUILD_TXT)
 
 status :
 	@docker ps
 	@$(STATUS_TXT)
+re :	down up
 
 clean: down
 	docker system prune -a
 	@$(CLEAN_TXT)
 
-.PHONY: all clean stop up down build status
+.PHONY: re all clean stop up down build status
