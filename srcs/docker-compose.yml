@@ -1,59 +1,62 @@
-# version: '3.3'
-
 services:
 
   nginx:
-      build:
-        context: ./requirements/nginx/
-      entrypoint:
-        - nginx
-        - -g
-        - "daemon off;" 
-        # - tail 
-        # - -f 
-        # - /var/log/nginx/error.log
-
-      volumes:
-        - ./requirements/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
-        - wordpress_data:/var/www/wordpress
-      ports:
+    build:
+      context: ./requirements/nginx/
+    entrypoint:
+      - nginx
+      - -g
+      - "daemon off;"
+    volumes:
+      - ./requirements/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - wordpress_data:/var/www/wordpress
+    ports:
       - "443:443"
-      # restart: always
-      # network:
-      # depends_on:
-
-# utilise l'image officiel
-  mariadb:
-    image: mariadb
+    depends_on:
+      - wordpress
+      - mariadb
+    networks:
+      - inception
     restart: always
+
+  mariadb:
+    build:
+      context: ./requirements/mariadb/
     environment:
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
       MARIADB_DATABASE: ${MARIADB_DATABASE}
       MARIADB_USER: ${MARIADB_USER}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - inception
+    restart: always
 
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+    volumes:
+      - wordpress_data:/var/www/wordpress
+    environment:
       WORDPRESS_URL: ${WORDPRESS_URL}
       WORDPRESS_TITLE: ${WORDPRESS_TITLE}
       WORDPRESS_ADMIN_NAME: ${WORDPRESS_ADMIN_NAME}
       WORDPRESS_ADMIN_PASSWORD: ${WORDPRESS_ADMIN_PASSWORD}
       WORDPRESS_ADMIN_EMAIL: ${WORDPRESS_ADMIN_EMAIL}
-
       WORDPRESS_USER_NAME: ${WORDPRESS_USER_NAME}
       WORDPRESS_USER_EMAIL: ${WORDPRESS_USER_EMAIL}
       WORDPRESS_USER_PASSWORD: ${WORDPRESS_USER_PASSWORD}
-
-    # ports:
-    #   - "3306:3306"
-
-
-  wordpress:
-    build:
-        context: ./requirements/wordpress
-    volumes:
-      - wordpress_data:/var/www/wordpress
-    environment:
-      - 
-      
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+    restart: always
+    
+ 
 volumes:
   wordpress_data:  # Volume nommé pour partager les données entre WordPress et Nginx
     driver: local
@@ -69,6 +72,6 @@ volumes:
       o: bind
       device: /tmp/data/mariadb   # Le chemin local sur l'hôte pour les données MariaDB
 
-
-
-    
+networks:
+  inception:
+    name: inception

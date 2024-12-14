@@ -25,33 +25,19 @@ RUN apt-get install -y wget php7.3 php7.3-fpm php-mysql mariadb-client && \
 
 # deplace le fichier que l'on doit configurer
 # COPY conf/wp-config.php /var/www/wordpress/wp-config.php
+
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
-COPY conf/init.sh /var/www/wordpress/init.sh
+COPY conf/init.sh /var/www/
 
-
-# j'arrive pas a deplacer le dossier qui a deja dans www?????
-# RUN cp -a /tmp/wordpress/. /var/www/wordpress
 #≻────────────── ⋆✩⋆ AUTORISATION ⋆✩⋆──────────────≺
 
-# RUN		chown -R www-data:www-data  /var/www/wordpress
 #≻────────────── ⋆✩⋆ PORT ⋆✩⋆──────────────≺
 
 EXPOSE 9000
 #≻────────────── ⋆✩⋆ Config ⋆✩⋆──────────────≺
 
-# COPY ./conf/script.sh /
 #≻────────────── ⋆✩⋆ Lancement ⋆✩⋆──────────────≺
 WORKDIR /var/www/wordpress
-CMD ["bash", "/var/www/wordpress/init.sh"]
 
+CMD ["bash", "/var/www/init.sh"]
 
-
-
-# # Utilise l'image officielle de WordPress
-# FROM wordpress:latest
-
-# # Ajoutez des plugins ou des personnalisations ici si nécessaire
-# # COPY mon_plugin /var/www/html/wp-content/plugins/
-
-# # Expose le port 9000 pour PHP-FPM
-# EXPOSE 9000

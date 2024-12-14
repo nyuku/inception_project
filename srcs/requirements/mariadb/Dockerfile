@@ -8,30 +8,20 @@
 
 # ≻────────────── ⋆✩⋆ ENV SYSTEME ⋆✩⋆──────────────≺
 
-# debian: buster est trop lourd et complet,
-# FROM debian:buster
-FROM mysql:latest
+FROM debian:buster
 # ≻────────────── ⋆✩⋆ INSTALLATION ⋆✩⋆──────────────≺
 
-# 10.3 version de Maria
 RUN apt-get update -y 
-RUN apt-get install mariadb-server -y
+RUN apt-get install procps mariadb-server -y
 # ≻────────────── ⋆✩⋆ CONFIG ⋆✩⋆──────────────≺
 
 COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
 
+COPY conf/script.sh /
 
+RUN mkdir -p /var/run/mysqld && chown -R mysql:mysql /var/run/mysqld
 
+EXPOSE 3306
 
-
-
-
-
-# # Utilise l'image officielle de MySQL
-# FROM mysql:latest
-
-# # Spécifiez la configuration de la base de données si nécessaire
-# # COPY mon_fichier_de_configuration.cnf /etc/mysql/conf.d/
-
-# # Expose le port 3306 pour la base de données
-# EXPOSE 3306
+RUN chmod +x /script.sh
+CMD ["bash", "script.sh"]
