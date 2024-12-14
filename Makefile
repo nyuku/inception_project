@@ -46,5 +46,8 @@ re :	down up
 clean: down
 	docker system prune -a
 	@$(CLEAN_TXT)
-
+wp:
+	rm -rf /tmp/data/wordpress/*
+maria:
+	rm -rf /tmp/data/mariadb/*
 .PHONY: re all clean stop up down build status
