@@ -50,4 +50,8 @@ wp:
 	rm -rf /tmp/data/wordpress/*
 maria:
 	rm -rf /tmp/data/mariadb/*
-.PHONY: re all clean stop up down build status
+volumes:
+	docker volume rm srcs_wordpress_data
+	docker volume rm srcs_mariadb_data
+	
+.PHONY: re all clean stop up down build status volumes

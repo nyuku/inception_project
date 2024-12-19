@@ -21,7 +21,7 @@ else
 
     sleep 10
 
-    wp core config \
+    wp config create \
         --dbname=$MARIADB_DATABASE \
         --dbuser=$MARIADB_USER \
         --dbpass=$MARIADB_PASSWORD \
@@ -43,7 +43,7 @@ else
         --allow-root
 
     mkdir -p /run/php/
-    touch /tmp/.setup
+    touch $SETUP_FILE
 fi
  
 echo "Launchin wordpress with php-fpm"
