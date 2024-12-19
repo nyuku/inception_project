@@ -47,11 +47,13 @@ clean: down
 	docker system prune -a
 	@$(CLEAN_TXT)
 wp:
-	rm -rf /tmp/data/wordpress/*
+	rm -rf /tmp/data/wordpress
+	mkdir -p /tmp/data/wordpress
 maria:
-	rm -rf /tmp/data/mariadb/*
+	rm -rf /tmp/data/mariadb
+	mkdir -p /tmp/data/mariadb
 volumes:
-	docker volume rm srcs_wordpress_data
-	docker volume rm srcs_mariadb_data
-	
+	@docker volume rm srcs_wordpress_data || true
+	@docker volume rm srcs_mariadb_data || true
+
 .PHONY: re all clean stop up down build status volumes
