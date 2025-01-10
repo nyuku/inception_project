@@ -8,7 +8,7 @@ if test -f "$SETUP_FILE"; then
     echo "Already setup!"
 
 else
-
+	echo "no setup!"
     mkdir -p /var/www/wordpress
     cd /var/www/wordpress
 
