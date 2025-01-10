@@ -20,7 +20,7 @@ STATUS_TXT      =   echo "$(CYAN)Checking container status$(ENDCOLOR)"
 CLEAN_TXT     	=   echo "$(CYAN)Cleaning$(ENDCOLOR)"
 # --------------- VISUEL --------------------
 
-all : build up
+all : superclean build up
 
 up :
 	@docker compose -f ./srcs/docker-compose.yml up -d
@@ -55,5 +55,6 @@ maria:
 volumes:
 	@docker volume rm srcs_wordpress_data || true
 	@docker volume rm srcs_mariadb_data || true
+superclean: clean wp maria volumes
 
-.PHONY: re all clean stop up down build status volumes
+.PHONY: re all clean stop up down build status volumes superclean
