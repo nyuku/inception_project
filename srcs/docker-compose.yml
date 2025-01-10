@@ -64,7 +64,7 @@ volumes:
       type: none
       o: bind
       device: /angnguye/data/wordpress   # Le chemin local sur l'hôte pour stocker les données
-      # device: /tmp/data/wordpress
+
 
   mariadb_data:  # Volume pour la base de données MariaDB
     driver: local
@@ -72,7 +72,7 @@ volumes:
       type: none
       o: bind
       device: /angnguye/data/mariadb   # Le chemin local sur l'hôte pour les données MariaDB
-      # device: /tmp/data/mariadb
+
 networks:
   inception:
     name: inception

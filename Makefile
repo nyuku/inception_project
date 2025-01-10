@@ -47,14 +47,10 @@ clean: down
 	docker system prune -a
 	@$(CLEAN_TXT)
 wp:
-	# rm -rf /tmp/data/wordpress
-	# mkdir -p /tmp/data/wordpress
 	rm -rf /angnguye/data/wordpress
 	mkdir -p /angnguye/data/wordpress
 	
 maria:
-	# rm -rf /tmp/data/mariadb
-	# mkdir -p /tmp/data/mariadb
 	rm -rf /angnguye/data/mariadb 
 	mkdir -p /angnguye/data/mariadb 
 volumes:
